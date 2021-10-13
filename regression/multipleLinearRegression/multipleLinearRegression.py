@@ -58,6 +58,8 @@ regressor.fit(x_train, y_train)
 y_pred = regressor.predict(x_test)
 
 #Building the optimal model using Backward Elimination
+#The thumbrule is to keep eliminating independent variables till you see the corresponding p>0.05, which is your chosen significance level. However, do so only until you see that the adjusted R2 value continues to increase and stop eliminating the moment you see that eliminating variables in turn lead up to a decreasing adjusted R2 value
+#Interpreting coefficients - Look at the Estimate column of the Coefficients section - A positive number against a given variable indicates a positive correlation and vice versa, also, the magntiude indicates a "per unit" significance the resective independent variable has on the performance of the dependent variable
 import statsmodels.api
 x = numpy.append(numpy.ones(shape = (50, 1), dtype = "int"), x, axis = 1)    #Adding a column of 1s at the beginning of the independent variable matrix to correspond to b0x0 of the multilinear regression equation
 x_optimalMatrixOfFeatures = x[:, [0, 1, 2, 3, 4, 5]] #initialising the optimal feature matrix with the constant + independent variable columns
@@ -65,21 +67,21 @@ regressor_OLS = statsmodels.api.OLS(endog = y, exog = x_optimalMatrixOfFeatures)
 regressor_OLS.summary()
 
 #Looping again, eliminating x2 with p=0.990>0.05 and fitting x_optimalMatrixOfFeatures
-x_optimalMatrixOfFeatures = x[:, [0, 1, 3, 4, 5]] #initialising the optimal feature matrix with the constant + independent variable columns
+x_optimalMatrixOfFeatures = x[:, [0, 1, 3, 4, 5]]
 regressor_OLS = statsmodels.api.OLS(endog = y, exog = x_optimalMatrixOfFeatures).fit()
 regressor_OLS.summary()
 
 #Looping again, eliminating x1 with p=0.940>0.05 and fitting x_optimalMatrixOfFeatures
-x_optimalMatrixOfFeatures = x[:, [0, 3, 4, 5]] #initialising the optimal feature matrix with the constant + independent variable columns
+x_optimalMatrixOfFeatures = x[:, [0, 3, 4, 5]]
 regressor_OLS = statsmodels.api.OLS(endog = y, exog = x_optimalMatrixOfFeatures).fit()
 regressor_OLS.summary()
 
 #Looping again, eliminating x2 with p=0.602>0.05 and fitting x_optimalMatrixOfFeatures
-x_optimalMatrixOfFeatures = x[:, [0, 3, 5]] #initialising the optimal feature matrix with the constant + independent variable columns
+x_optimalMatrixOfFeatures = x[:, [0, 3, 5]]
 regressor_OLS = statsmodels.api.OLS(endog = y, exog = x_optimalMatrixOfFeatures).fit()
 regressor_OLS.summary()
 
 #Looping again, eliminating x2 with p=0.060>0.05 and fitting x_optimalMatrixOfFeatures
-x_optimalMatrixOfFeatures = x[:, [0, 3]] #initialising the optimal feature matrix with the constant + independent variable columns
+x_optimalMatrixOfFeatures = x[:, [0, 3]]
 regressor_OLS = statsmodels.api.OLS(endog = y, exog = x_optimalMatrixOfFeatures).fit()
 regressor_OLS.summary()
